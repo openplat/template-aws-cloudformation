@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS CloudFormation Sample Template for creating an Amazon RDS DB instance.
+Parameters:
+  DBPassword:
+    NoEcho: 'true'
+    Description: Password MySQL database access
+    Type: String
+    MinLength: '8'
+    MaxLength: '41'
+    AllowedPattern: '[a-zA-Z0-9]*'
+    ConstraintDescription: must contain only alphanumeric characters.
+Resources:
+  PostgresSampleDB:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBInstanceIdentifier: "{{parameters.metadata.name}}-instance"
+      DBName: "{{parameters.metadata.name}}"
+      DBInstanceClass: db.t4g.micro
+      AllocatedStorage: "{{parameters.spec.storageSize}}"
+      StorageType: gp3
+      Engine: postgres
+      EngineVersion: "{{parameters.spec.version}}"
+      MasterUsername: dbuser
+      MasterUserPassword: !Ref DBPassword

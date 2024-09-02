@@ -1,0 +1,12 @@
+{
+    "template": {
+      "name": "template-aws-cloudformation",
+      "description": "AWS resources templates using CloudFormation",
+      "version": "0.0.1",
+      "options": {
+        "ignore": [
+          "**/**"
+        ]
+      }
+    }
+  }
