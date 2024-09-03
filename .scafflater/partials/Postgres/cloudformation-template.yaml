@@ -1,15 +1,15 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: AWS CloudFormation Sample Template for creating an Amazon RDS DB instance.
-Parameters:
-  DBPassword:
-    NoEcho: 'true'
-    Description: Password MySQL database access
-    Type: String
-    MinLength: '8'
-    MaxLength: '41'
-    AllowedPattern: '[a-zA-Z0-9]*'
-    ConstraintDescription: must contain only alphanumeric characters.
 Resources:
+  DBSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Description: 'Password {{parameters.metadata.name}} database access'
+      GenerateSecretString:
+          SecretStringTemplate:  '{"username": "admin"}'
+          GenerateStringKey: 'password'
+          PasswordLength: 16
+          ExcludeCharacters: '"@/\'
   PostgresSampleDB:
     Type: 'AWS::RDS::DBInstance'
     Properties:
@@ -20,5 +20,5 @@ Resources:
       StorageType: gp3
       Engine: postgres
       EngineVersion: "{{parameters.spec.version}}"
-      MasterUsername: dbuser
-      MasterUserPassword: !Ref DBPassword
+      MasterUsername: !Join ['', ['{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:username}}' ]]
+      MasterUserPassword: !Join ['', ['{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:password}}' ]]
