@@ -6,7 +6,7 @@ Resources:
     Properties:
       Description: 'Password {{parameters.metadata.name}} database access'
       GenerateSecretString:
-          SecretStringTemplate:  '{"username": "admin"}'
+          SecretStringTemplate:  '{"username": "dbadmin"}'
           GenerateStringKey: 'password'
           PasswordLength: 16
           ExcludeCharacters: '"@/\'
