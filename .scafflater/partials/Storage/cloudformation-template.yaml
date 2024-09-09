@@ -1,0 +1,7 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS CloudFormation Template to create a simple S3 bucket.
+Resources:
+  SimpleS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: {{parameters.metadata.name}}
