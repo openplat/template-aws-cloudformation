@@ -31,7 +31,7 @@ Resources:
       TargetType: AWS::RDS::DBInstance
 
 Outputs: 
-  Secret_Random:
+  SecretRandomName:
     Description: "The ARN of the secret"
     Value: !Ref DBSecret.Arn
     Export:
