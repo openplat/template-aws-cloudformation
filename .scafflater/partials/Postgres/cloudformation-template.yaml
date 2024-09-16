@@ -33,6 +33,6 @@ Resources:
 Outputs: 
   SecretRandomName:
     Description: "The ARN of the secret"
-    Value: !Ref DBSecret.Arn
+    Value: !Ref DBSecret
     Export:
       Name: "Secrets_{{parameters.metadata.name}}"
