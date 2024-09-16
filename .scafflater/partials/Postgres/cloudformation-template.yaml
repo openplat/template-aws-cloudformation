@@ -30,11 +30,9 @@ Resources:
       TargetId: !Ref PostgresSampleDB
       TargetType: AWS::RDS::DBInstance
 
-Outputs:
-  DBEndpoint:
-    Description: "The endpoint of the RDS instance"
-    Value: !GetAtt PostgresSampleDB.Endpoint.Address
-
-  DBPort:
-    Description: "The port of the RDS instance"
-    Value: !GetAtt PostgresSampleDB.Endpoint.Port
+Outputs: 
+  Secret_Random:
+    Description: "The ARN of the secret"
+    Value: !Ref DBSecret.Arn
+    Export:
+      Name: "Secrets_{{parameters.metadata.name}}"
