@@ -35,4 +35,4 @@ Outputs:
     Description: "The ARN of the secret"
     Value: !Ref DBSecret
     Export:
-      Name: "Secrets_{{parameters.metadata.name}}"
+      Name: "Secrets-{{parameters.metadata.name}}"
