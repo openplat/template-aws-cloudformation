@@ -22,3 +22,19 @@ Resources:
       EngineVersion: "{{parameters.spec.version}}"
       MasterUsername: !Join ['', ['\{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:username}}' ]]
       MasterUserPassword: !Join ['', ['\{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:password}}' ]]
+
+  DBSecretAttachment:
+    Type: AWS::SecretsManager::SecretTargetAttachment
+    Properties:
+      SecretId: !Ref DBSecret
+      TargetId: !Ref PostgresSampleDB
+      TargetType: AWS::RDS::DBInstance
+
+Outputs:
+  DBEndpoint:
+    Description: "The endpoint of the RDS instance"
+    Value: !GetAtt PostgresSampleDB.Endpoint.Address
+
+  DBPort:
+    Description: "The port of the RDS instance"
+    Value: !GetAtt PostgresSampleDB.Endpoint.Port
