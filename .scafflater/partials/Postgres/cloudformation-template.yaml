@@ -20,8 +20,8 @@ Resources:
       StorageType: gp3
       Engine: postgres
       EngineVersion: "{{parameters.spec.version}}"
-      MasterUsername: !Join ['', ['\{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:username}}' ]]
-      MasterUserPassword: !Join ['', ['\{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:password}}' ]]
+      MasterUsername: !Join ['', ['\{{resolve:secretsmanager:', !Ref '{{parameters.metadata.name}}DBSecret', ':SecretString:username}}' ]]
+      MasterUserPassword: !Join ['', ['\{{resolve:secretsmanager:', !Ref '{{parameters.metadata.name}}DBSecret', ':SecretString:password}}' ]]
 
   '{{parameters.metadata.name}}DBSecretAttachment':
     Type: AWS::SecretsManager::SecretTargetAttachment
