@@ -10,7 +10,7 @@ Resources:
           GenerateStringKey: 'password'
           PasswordLength: 16
           ExcludeCharacters: '"@/\'
-  '{{parameters.metadata.name}}PostgresSampleDB':
+  '{{parameters.metadata.name}}PostgresDB':
     Type: 'AWS::RDS::DBInstance'
     Properties:
       DBInstanceIdentifier: "{{parameters.metadata.name}}-instance"
@@ -26,11 +26,11 @@ Resources:
   '{{parameters.metadata.name}}DBSecretAttachment':
     Type: AWS::SecretsManager::SecretTargetAttachment
     Properties:
-      SecretId: !Ref DBSecret
-      TargetId: !Ref PostgresSampleDB
+      SecretId: !Ref '{{parameters.metadata.name}}DBSecret'
+      TargetId: !Ref '{{parameters.metadata.name}}PostgresDB'
       TargetType: AWS::RDS::DBInstance
 
 Outputs: 
   '{{parameters.metadata.name}}Secret':
     Description: "The ARN of the secret"
-    Value: !Ref DBSecret
+    Value: !Ref '{{parameters.metadata.name}}DBSecret'
