@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: AWS CloudFormation Sample Template for creating an Amazon RDS DB instance.
 Resources:
-  DBSecret:
+  '{{parameters.metadata.name}}DBSecret':
     Type: AWS::SecretsManager::Secret
     Properties:
       Description: 'Password {{parameters.metadata.name}} database access'
@@ -10,7 +10,7 @@ Resources:
           GenerateStringKey: 'password'
           PasswordLength: 16
           ExcludeCharacters: '"@/\'
-  PostgresSampleDB:
+  '{{parameters.metadata.name}}PostgresSampleDB':
     Type: 'AWS::RDS::DBInstance'
     Properties:
       DBInstanceIdentifier: "{{parameters.metadata.name}}-instance"
@@ -23,7 +23,7 @@ Resources:
       MasterUsername: !Join ['', ['\{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:username}}' ]]
       MasterUserPassword: !Join ['', ['\{{resolve:secretsmanager:', !Ref DBSecret, ':SecretString:password}}' ]]
 
-  DBSecretAttachment:
+  '{{parameters.metadata.name}}DBSecretAttachment':
     Type: AWS::SecretsManager::SecretTargetAttachment
     Properties:
       SecretId: !Ref DBSecret
@@ -31,8 +31,6 @@ Resources:
       TargetType: AWS::RDS::DBInstance
 
 Outputs: 
-  SecretRandomName:
+  '{{parameters.metadata.name}}Secret':
     Description: "The ARN of the secret"
     Value: !Ref DBSecret
-    Export:
-      Name: "Secrets-{{parameters.metadata.name}}"
